@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>MsqIndexTests</AssemblyName>
+    <RootNamespace>MsqTitleScreen.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DalamudLibPath Condition="'$(DalamudLibPath)' == ''">$(HOME)/.xlcore/dalamud/Hooks/dev/</DalamudLibPath>
+  </PropertyGroup>
+
+  <!-- The quest ordering is exercised against the real installed sheets, so the same
+       source file the plugin ships is compiled in rather than copied. -->
+  <ItemGroup>
+    <Compile Include="../../MsqTitleScreen/MsqIndex.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Lumina">
+      <HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
+    </Reference>
+    <Reference Include="Lumina.Excel">
+      <HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
