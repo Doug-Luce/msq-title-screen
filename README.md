@@ -21,10 +21,9 @@ by hand, but it does not follow anything.
 
 ## What this does
 
-On login, and once a minute while you play, the plugin finds the furthest main scenario
-quest your current character has accepted or completed, and points the game's own title
-screen setting at that expansion. The next time you reach the title screen you get that
-expansion's background, logo and music.
+The plugin finds the furthest main scenario quest your current character has accepted or
+completed, and points the game's own title screen setting at that expansion. The next time
+you reach the title screen you get that expansion's background, logo and music.
 
 Nothing is hooked, patched or modded: the plugin writes `TitleScreenType`, the same
 setting the Movies & Title menu writes. Turn the plugin off, or press **Hand back to the
@@ -88,6 +87,10 @@ dotnet run --project tests/MsqIndexTests -c Release
 Runs the plugin's own quest-ordering code against the installed game data with simulated
 quest state - structure, named story anchors, expansion boundaries, the roll-over rule, and
 characters with story-skip holes. No game client required.
+
+## Support
+
+If this is useful to you: [ko-fi.com/aurelius1](https://ko-fi.com/aurelius1).
 
 ## Credits
 

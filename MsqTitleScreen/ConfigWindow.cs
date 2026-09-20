@@ -1,10 +1,13 @@
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Utility;
 
 namespace MsqTitleScreen;
 
 internal sealed class ConfigWindow
 {
+    private const string KoFi = "https://ko-fi.com/aurelius1";
+
     private readonly Configuration cfg;
     private readonly Plugin plugin;
 
@@ -65,6 +68,13 @@ internal sealed class ConfigWindow
 
         ImGui.Spacing();
         ImGui.TextDisabled("The title screen is drawn before any character is known, so it\nshows the story position of whoever played last.");
+
+        ImGui.Separator();
+        if (ImGui.Button("Support on Ko-fi"))
+            Util.OpenLink(KoFi);
+
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip(KoFi);
 
         ImGui.End();
     }
