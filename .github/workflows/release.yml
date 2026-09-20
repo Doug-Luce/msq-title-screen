@@ -56,8 +56,13 @@ jobs:
           manifest["AssemblyVersion"] = "${{ steps.version.outputs.version }}"
           json.dump(manifest, open(path, "w"), indent=2)
           PY
-          mkdir -p dist
-          cd MsqTitleScreen/bin/Release && zip -r ../../../dist/latest.zip MsqTitleScreen.dll MsqTitleScreen.json
+          python3 - <<'PY'
+          import os, zipfile
+          os.makedirs("dist", exist_ok=True)
+          with zipfile.ZipFile("dist/latest.zip", "w", zipfile.ZIP_DEFLATED) as z:
+              for name in ("MsqTitleScreen.dll", "MsqTitleScreen.json"):
+                  z.write(os.path.join("MsqTitleScreen/bin/Release", name), name)
+          PY
 
       # repo.json is what the plugin installer polls, so the version it advertises has to
       # move with the release or Dalamud will not offer the update.
