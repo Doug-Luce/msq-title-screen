@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2049"/>
+      <stop offset="0.55" stop-color="#141838"/>
+      <stop offset="1" stop-color="#0d1028"/>
+    </linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2d3a7d"/>
+      <stop offset="0.45" stop-color="#6a5c9e"/>
+      <stop offset="0.72" stop-color="#c77e7a"/>
+      <stop offset="1" stop-color="#f0b071"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20264f"/>
+      <stop offset="1" stop-color="#151a3a"/>
+    </linearGradient>
+    <linearGradient id="shard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fd8ff"/>
+      <stop offset="1" stop-color="#5f7fd6"/>
+    </linearGradient>
+    <linearGradient id="glint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd9a8" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ffd9a8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="sunglow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd9a0" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffb066" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="tight" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <clipPath id="screen">
+      <rect x="72" y="104" width="368" height="207" rx="18"/>
+    </clipPath>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#tile)"/>
+  <rect width="512" height="512" rx="112" fill="none" stroke="#3d4587" stroke-opacity="0.55" stroke-width="3"/>
+
+  <g clip-path="url(#screen)">
+    <rect x="72" y="104" width="368" height="207" fill="url(#sky)"/>
+    <g fill="#ffffff">
+      <circle cx="118" cy="132" r="2.6" opacity="0.85"/>
+      <circle cx="163" cy="158" r="1.8" opacity="0.6"/>
+      <circle cx="214" cy="127" r="2.2" opacity="0.7"/>
+      <circle cx="286" cy="141" r="1.8" opacity="0.55"/>
+      <circle cx="339" cy="124" r="2.6" opacity="0.8"/>
+      <circle cx="398" cy="150" r="2" opacity="0.6"/>
+    </g>
+    <circle cx="256" cy="243" r="74" fill="url(#sunglow)"/>
+    <circle cx="256" cy="245" r="27" fill="#ffe2b0"/>
+    <rect x="72" y="245" width="368" height="66" fill="url(#sea)"/>
+    <rect x="72" y="243" width="368" height="3" fill="#ffd6a3" opacity="0.75"/>
+    <g fill="#ffd9a8">
+      <rect x="226" y="254" width="60" height="4" rx="2" opacity="0.40"/>
+      <rect x="234" y="266" width="44" height="3.5" rx="1.75" opacity="0.28"/>
+      <rect x="242" y="278" width="28" height="3" rx="1.5" opacity="0.18"/>
+      <rect x="248" y="290" width="16" height="2.5" rx="1.25" opacity="0.12"/>
+    </g>
+    <!-- a crystal on the horizon: the story, standing where the eye lands -->
+    <ellipse cx="366" cy="246" rx="34" ry="7" fill="#9fd8ff" opacity="0.35" filter="url(#tight)"/>
+    <polygon points="342,246 364,161 384,201 390,246" fill="url(#shard)" opacity="0.95"/>
+    <polygon points="364,161 384,201 374,246 364,246" fill="#eaf6ff" opacity="0.38"/>
+    <polygon points="342,246 364,161 364,246" fill="#2f4794" opacity="0.3"/>
+    <polygon points="123,246 137,199 152,246" fill="#2a3168" opacity="0.85"/>
+    <g filter="url(#tight)" opacity="0.55">
+      <polygon points="342,246 364,161 384,201 390,246" fill="#bfe4ff"/>
+    </g>
+  </g>
+  <rect x="72" y="104" width="368" height="207" rx="18" fill="none" stroke="#8e97e0" stroke-opacity="0.5" stroke-width="3"/>
+
+  <!-- six chapters; the one you are living in is lit -->
+  <g>
+    <g filter="url(#soft)" opacity="0.85">
+      <rect x="318" y="362" width="56" height="20" rx="10" fill="#ffc861"/>
+    </g>
+    <rect x="94" y="364" width="44" height="16" rx="8" fill="#5b64ad" opacity="0.75"/>
+    <rect x="150" y="364" width="44" height="16" rx="8" fill="#5b64ad" opacity="0.75"/>
+    <rect x="206" y="364" width="44" height="16" rx="8" fill="#5b64ad" opacity="0.75"/>
+    <rect x="262" y="364" width="44" height="16" rx="8" fill="#5b64ad" opacity="0.75"/>
+    <rect x="318" y="360" width="56" height="24" rx="12" fill="#ffd27d"/>
+    <rect x="386" y="364" width="44" height="16" rx="8" fill="#3c4483" opacity="0.8"/>
+  </g>
+</svg>

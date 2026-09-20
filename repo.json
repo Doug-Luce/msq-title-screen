@@ -25,6 +25,7 @@
     "LastUpdate": 1789923221,
     "DownloadLinkInstall": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip",
     "DownloadLinkUpdate": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip",
-    "DownloadLinkTesting": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip"
+    "DownloadLinkTesting": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip",
+    "IconUrl": "https://raw.githubusercontent.com/Doug-Luce/msq-title-screen/main/images/icon.png"
   }
 ]

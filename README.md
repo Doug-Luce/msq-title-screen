@@ -1,5 +1,7 @@
 # MSQ Title Screen
 
+<img src="images/icon.png" width="128" alt="">
+
 A [Dalamud](https://github.com/goatcorp/Dalamud) plugin that shows the title screen of the
 expansion you are actually playing through.
 
