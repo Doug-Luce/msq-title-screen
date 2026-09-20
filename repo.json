@@ -3,7 +3,7 @@
     "Author": "Doug Luce",
     "Name": "MSQ Title Screen",
     "InternalName": "MsqTitleScreen",
-    "AssemblyVersion": "1.0.0.0",
+    "AssemblyVersion": "1.0.1.0",
     "Description": "The game picks its title screen from the furthest main scenario progress on the PC, so a character partway through an older expansion still boots into the newest screen.\n\nThis pins the game's own title screen setting to the story position of the character you last played, logo and music included. No game files are touched - it writes the same setting the title screen's Movies & Title menu does.",
     "Punchline": "Shows the title screen of the expansion you are actually playing through.",
     "ApplicableVersion": "any",
@@ -22,7 +22,7 @@
     "LoadPriority": 0,
     "IsHide": false,
     "DownloadCount": 0,
-    "LastUpdate": 1789923125,
+    "LastUpdate": 1789923221,
     "DownloadLinkInstall": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip",
     "DownloadLinkUpdate": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip",
     "DownloadLinkTesting": "https://github.com/Doug-Luce/msq-title-screen/releases/latest/download/latest.zip"
