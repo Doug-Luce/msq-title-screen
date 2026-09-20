@@ -38,6 +38,12 @@ public sealed unsafe class Plugin : IDalamudPlugin
     private MsqIndex? index;
     private DateTime nextPoll = DateTime.MinValue;
 
+    /// <summary>
+    /// Set when writing the setting throws. Polling runs on the framework tick, so one
+    /// bad write must not become a failure every minute for the rest of the session.
+    /// </summary>
+    private bool writesDisabled;
+
     public Plugin()
     {
         config = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
@@ -102,7 +108,21 @@ public sealed unsafe class Plugin : IDalamudPlugin
             return;
         }
 
-        GameConfig.System.Set(TitleScreenTypeOption, desired);
+        if (writesDisabled)
+            return;
+
+        try
+        {
+            GameConfig.System.Set(TitleScreenTypeOption, desired);
+        }
+        catch (Exception ex)
+        {
+            writesDisabled = true;
+            Log.Error(ex, $"Could not write {TitleScreenTypeOption}; no further attempts this session.");
+            Report($"Could not change the title screen setting: {ex.Message}");
+            return;
+        }
+
         config.LastWritten = desired;
         config.Save();
 
@@ -115,7 +135,17 @@ public sealed unsafe class Plugin : IDalamudPlugin
     /// <summary>Hand the setting back to the game, which picks the furthest progress on this PC.</summary>
     internal void RestoreGameDefault()
     {
-        GameConfig.System.Set(TitleScreenTypeOption, TitleScreens.GameDefault);
+        try
+        {
+            GameConfig.System.Set(TitleScreenTypeOption, TitleScreens.GameDefault);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Could not write {TitleScreenTypeOption}.");
+            Report($"Could not restore the title screen setting: {ex.Message}");
+            return;
+        }
+
         config.LastWritten = TitleScreens.GameDefault;
         config.Save();
         Report("Title screen handed back to the game's own setting.");
@@ -140,6 +170,8 @@ public sealed unsafe class Plugin : IDalamudPlugin
 
     private void OnLogin()
     {
+        // A new character is a fresh chance for a write that failed earlier.
+        writesDisabled = false;
         // The character's quest state is not readable the instant Login fires; the poll
         // below picks it up on the next tick anyway.
         nextPoll = DateTime.MinValue;
