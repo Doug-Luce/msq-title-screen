@@ -1,4 +1,6 @@
 using System;
+using Dalamud.Game.Addon.Lifecycle;
+using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
@@ -20,14 +22,28 @@ public sealed unsafe class Plugin : IDalamudPlugin
     /// <summary>Config option 157: the game's own record of how far the story has got.</summary>
     private const string MsqProgressOption = "MsqProgress";
 
+    /// <summary>
+    /// The quest completion window. Its finalize is the moment a quest is actually handed
+    /// in, which is the only event that can move a character's story position.
+    /// </summary>
+    private const string QuestCompleteAddon = "JournalResult";
+
     /// <summary>A full re-check costs a backwards walk over ~1000 quest lookups. Once a minute is plenty.</summary>
     private static readonly TimeSpan PollInterval = TimeSpan.FromSeconds(60);
+
+    /// <summary>
+    /// How long to wait after a quest hand-in before re-checking. The completion window
+    /// closes fractionally before the quest is marked complete, so an immediate read
+    /// would still see the old state.
+    /// </summary>
+    private static readonly TimeSpan AfterQuestDelay = TimeSpan.FromSeconds(2);
 
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static IClientState ClientState { get; private set; } = null!;
     [PluginService] internal static IFramework Framework { get; private set; } = null!;
     [PluginService] internal static IGameConfig GameConfig { get; private set; } = null!;
     [PluginService] internal static IDataManager Data { get; private set; } = null!;
+    [PluginService] internal static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
     [PluginService] internal static ICommandManager Commands { get; private set; } = null!;
     [PluginService] internal static IChatGui Chat { get; private set; } = null!;
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
@@ -55,6 +71,10 @@ public sealed unsafe class Plugin : IDalamudPlugin
 
         ClientState.Login += OnLogin;
         Framework.Update += OnUpdate;
+
+        // Without this the only thing moving the setting is the minute poll, so finishing
+        // an expansion and quitting straight away would leave the old title screen.
+        AddonLifecycle.RegisterListener(AddonEvent.PreFinalize, QuestCompleteAddon, OnQuestComplete);
 
         Commands.AddHandler("/msqtitle", new CommandInfo(OnCommand)
         {
@@ -177,6 +197,10 @@ public sealed unsafe class Plugin : IDalamudPlugin
         nextPoll = DateTime.MinValue;
     }
 
+    /// <summary>A quest was just handed in; re-check shortly, rather than at the next poll.</summary>
+    private void OnQuestComplete(AddonEvent type, AddonArgs args) =>
+        nextPoll = DateTime.UtcNow + AfterQuestDelay;
+
     private void OnUpdate(IFramework framework)
     {
         if (DateTime.UtcNow < nextPoll)
@@ -214,6 +238,7 @@ public sealed unsafe class Plugin : IDalamudPlugin
     public void Dispose()
     {
         Commands.RemoveHandler("/msqtitle");
+        AddonLifecycle.UnregisterListener(OnQuestComplete);
         Framework.Update -= OnUpdate;
         ClientState.Login -= OnLogin;
         PluginInterface.UiBuilder.OpenMainUi -= ToggleWindow;
